@@ -1,56 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { numeros, validadni, validacelular } from './../../helpers/validators';
+import { useForm1 } from '../../helpers/useForm';
+import { Politicas } from '../Atomos/Politicas';
+import {validators1} from './../../helpers/validators';
 
 export const Step1 = ({ fechamaxima, registro, setRegistro }) => {
 
+    const {handleChange, handleSubmit, errors, submitting} = useForm1(validators1, registro, setRegistro);
+
     const [leyenda, setLeyenda] = useState(false);
-    const [dni, setDni] = useState("");
-    const [celular, setCelular] = useState("");
-    const [tipodoc, setTipoDoc] = useState();    
     let history = useHistory();
 
-    const onSubmit = (e) => {
-        console.log(dni,celular);
-        e.preventDefault();
-        if (dni !== "" || celular !== "") {
-            //No permitimos avanzar
-        } else {
-            history.push('/step2')
-        }
-    }
-
     useEffect(() => {
-        if (Object.entries(registro).length !== 0) {    
-            if(registro?.tipo_doc){document.getElementById("tipo_doc").value = registro?.tipo_doc;}
-            if(registro?.num_doc){document.getElementById("num_doc").value = registro?.num_doc;}
-            if(registro?.fecha_nacimiento){document.getElementById("fecha_nacimiento").value = registro?.fecha_nacimiento;}
-            if(registro?.cel){document.getElementById("cel").value = registro?.cel;}
+        if(Object.keys(errors).length === 0 && submitting){
+            setRegistro({...registro, step: 1})
+            history.push('/step2');
         }
-    },[registro])
+    }, [errors, submitting, registro, setRegistro, history])
 
     return (        
             <div className="banner-dni">
-                <form onSubmit={onSubmit}>
+                <form onSubmit={handleSubmit}>
                     <h2>Obtén tu <label className="icon-s">seguro ahora</label></h2>
                     <p>Ingresa los datos para comenzar</p>
                     <div className="form-control">
-                        {/* Tipo de Dni */}
+                        {/* Tipo de Documento */}
                         <select
                             className="control"
                             name="tipo_doc"
                             id="tipo_doc"
-                            onChange={(e) => {
-                                setTipoDoc(e.target.value);
-                                setRegistro({ ...registro, [e.target.name]: e.target.value })
-                            }}
-                            required
+                            value={registro.tipo_doc}
+                            onChange={handleChange}
+                            
                         >
                             <option value=""> -Selecciona- </option>
                             <option value="DNI"> DNI </option>
                             <option value="CE"> Carnet de Extranjería </option>
                         </select>
                     </div>
+                    {errors.tipo_doc && <span className="error">{errors.tipo_doc}</span>}
 
                     {/* Nro de Documento */}
                     <div className="form-control">
@@ -62,20 +50,12 @@ export const Step1 = ({ fechamaxima, registro, setRegistro }) => {
                             name="num_doc"
                             id="num_doc"
                             onFocus={(e) => { setLeyenda(true) }}
-                            onBlur={(e) => {
-                                setLeyenda(false);
-                                validadni(e, setDni, tipodoc)
-                            }}
-                            onKeyUp={(e) => { numeros(e) }}
-                            onChange={(e) => setRegistro({ ...registro, [e.target.name]: e.target.value })}
-                            required
+                            onBlur={(e) => { setLeyenda(false) }}
+                            value={registro.num_doc}
+                            onChange={handleChange}                            
                         />
-                        <span className="error">
-                            {dni && <span>{dni}</span>}
-                        </span>
-                        {leyenda &&
-                            <label className="fixed">Nro de Documento</label>
-                        }
+                        {errors.num_doc && <span className="error">{errors.num_doc}</span>}
+                        {leyenda && <label className="fixed">Nro de Documento</label>}
                     </div>
 
                     {/* Fecha de Nacimiento */}
@@ -90,16 +70,13 @@ export const Step1 = ({ fechamaxima, registro, setRegistro }) => {
                             onFocus={(e) => {
                                 e.currentTarget.type = "date";
                                 e.currentTarget.focus();
-                                setLeyenda(true);
-                            }
-                            }
+                                setLeyenda(true);}}
                             onBlur={(e) => { setLeyenda(false) }}
-                            onChange={(e) => setRegistro({ ...registro, [e.target.name]: e.target.value })}
-                            required
+                            value={registro.fecha_nacimiento}
+                            onChange={handleChange}
                         />
-                        {leyenda &&
-                            <label className="fixed">Fecha de Nacimiento</label>
-                        }
+                        {errors.fecha_nacimiento && <span className="error">{errors.fecha_nacimiento}</span>}
+                        {leyenda && <label className="fixed">Fecha de Nacimiento</label>}
                     </div>
 
                     {/* Celular */}
@@ -111,43 +88,17 @@ export const Step1 = ({ fechamaxima, registro, setRegistro }) => {
                             name="cel"
                             id="cel"
                             onFocus={(e) => { setLeyenda(true) }}
-                            onBlur={(e) => { setLeyenda(false); numeros(e); validacelular(e, setCelular) }}
-                            onChange={(e) => setRegistro({ ...registro, [e.target.name]: e.target.value })}
+                            onBlur={(e) => { setLeyenda(false); }}
+                            value={registro.cel}
+                            onChange={handleChange}
                             autoComplete="off"
-                            required
                         />
-                        <span className="error">
-                            {celular && celular}
-                        </span>
-                        {leyenda &&
-                            <label className="fixed">Celular</label>
-                        }
+                        {errors.cel && <span className="error">{errors.cel}</span>}
+                        {leyenda && <label className="fixed">Celular</label>}
                     </div>
-                    {/* Politicas */}
-                    <div className="politicas">
-                        <div>
-                            <input type="checkbox" name="politica1" id="politica1" className="check" required
-                                onChange={(e) => setRegistro({ ...registro, [e.target.name]: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label>
-                                Acepto la <a href=" #">Política de Protección de Datos Personales y los Términos y Condiciones</a>
-                            </label>
-                        </div>
-                    </div>
-                    <div className="politicas">
-                        <div>
-                            <input type="checkbox" name="politica2" id="politica2" className="check" required
-                                onChange={(e) => setRegistro({ ...registro, [e.target.name]: e.target.value })}
-                            />
-                        </div>
-                        <div>
-                            <label>
-                                Acepto la <a href=" #">Política de Envío de Comunicaciones Comerciales</a>
-                            </label>
-                        </div>
-                    </div>
+
+                    {/* Politicas Obligatorias*/}
+                    <Politicas />
                     <button type="submit" className="rimac-button">Comencemos</button>
                 </form>
             </div>

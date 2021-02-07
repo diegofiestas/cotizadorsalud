@@ -1,8 +1,9 @@
 
-const usuario = (metodo) => {
+const obtenerusuario = (metodo) => {
     const url = 'https://randomuser.me/api';
     const requestOptions = {
         method: metodo,
+        mode: 'cors',
         headers: { 'Content-Type': 'application/json' }
     };
 
@@ -20,6 +21,7 @@ const registrarusuario = (id, data) => {
     const url = `https://randomuser.me/api`;
     const requestOptions = {
         method: 'POST',
+        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     };
@@ -34,10 +36,11 @@ const registrarusuario = (id, data) => {
     })
 }
 
-const eliminarusuario = (id) => {
+const eliminarusuario = (id, metodo) => {
     const url = `https://randomuser.me/api/${id}`;
     const requestOptions = {
-        method: 'DELETE',
+        method: metodo,
+        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },        
     };
 
@@ -52,5 +55,7 @@ const eliminarusuario = (id) => {
 }
 
 export {
-    usuario
+    obtenerusuario,
+    registrarusuario,
+    eliminarusuario
 }

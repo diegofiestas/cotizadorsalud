@@ -1,11 +1,9 @@
-import './App.css';
-import { Banner } from './components/Organismos/Banner';
+import './App.scss';
 import { RegistroPage } from './components/Paginas/RegistroPage';
 
 function App() {
   return (
     <div className="App">
-      <Banner />
       <RegistroPage />
     </div>
   );

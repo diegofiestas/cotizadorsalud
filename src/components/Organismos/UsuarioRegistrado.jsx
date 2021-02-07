@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const UsuarioRegistrado = ({registro, inicio, usuarioapi, user, errorapi}) => {
+export const UsuarioRegistrado = ({registro, inicio, usuarioapi, user, errorapi, eliminarusuario}) => {
     return (
         <div className="banner-resumen">                      
                 <div className="r-imagen">
@@ -19,8 +19,9 @@ export const UsuarioRegistrado = ({registro, inicio, usuarioapi, user, errorapi}
                 </div>
                 {errorapi && <label className="error mensaje-error">* Error con  API por favor intentalo nuevamente</label>}
                 <div className="r-botones">
-                    <button className="genera-user" onClick={inicio}>Ir al Inicio</button>
-                    <button className="genera-user" onClick={usuarioapi}>Generar Usuario API</button>
+                    <button className="inicio-button" onClick={inicio} title="Ir a Inicio"><i className="fas fa-home"></i></button>
+                    <button className="generauser-button" onClick={usuarioapi} title="Agregar Usuario API"><i className="fas fa-user-plus"></i></button>
+                    <button className="eliminar-button" onClick={eliminarusuario} title="Eliminar Usuario"><i className="fas fa-trash-alt"></i></button>
                 </div>
         </div>
     )

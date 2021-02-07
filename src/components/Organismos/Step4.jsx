@@ -6,12 +6,13 @@ export const Step4 = ({registro}) => {
     let history = useHistory();
 
     useEffect(() => {
-        if (Object.entries(registro).length === 0) {
-            history.push('/step1');
-        }
-    }, [registro, history])
+        if(registro.step === 0) { history.push('/step1') }
+        else if(registro.step === 1) { history.push('/step2') }
+        else if(registro.step === 2) { history.push('/step3') }
+    }, [registro.step, history])
 
     const FichaResumen = () => {
+        sessionStorage.setItem("usuario",JSON.stringify(registro))
         history.push('/resumen');
     }
 

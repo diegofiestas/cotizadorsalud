@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { usuario } from '../../helpers/services';
+import { obtenerusuario } from '../../helpers/services';
 import user from '../../img/user.JPG';
 import { UsuarioApi } from '../Organismos/UsuarioApi';
 import { UsuarioRegistrado } from '../Organismos/UsuarioRegistrado';
 
 export const Resumen = ({registro, setRegistro}) => {
 
-    const [registrado, setRegistrado] = useState(false);
+    const [usuario, setUsuario] = useState();
+    const [toggle, setToggle] = useState(false);
     const [usuario_api, setUsuario_Api] = useState(false);
     const [errorapi, setErrorApi] = useState(false);
-
     let history = useHistory();
 
-    useEffect(() => {
-        if (Object.entries(registro).length === 0) {
-            setRegistrado(false);
-            history.push('/step1');
-        } else{
-            setRegistrado(true);
-        }
-    }, [registro, history])
+    useEffect(() => {        
+            if(registro.step === 0) { history.push('/step1') }
+            else if(registro.step === 1) { history.push('/step2') }
+            else if(registro.step === 2) { history.push('/step3') }   
+            else { setToggle(true); setUsuario(JSON.parse(sessionStorage.getItem("usuario"))); }         
+    }, [registro.step, history])
     
     const usuarioapi = () => {
-        setRegistrado(false);
-        usuario('GET').then((response) => {
+        setToggle(false);
+        obtenerusuario('GET').then((response) => {
             setUsuario_Api(response.results[0]);
             setErrorApi(false);            
         }).catch((error) => {
@@ -32,18 +30,39 @@ export const Resumen = ({registro, setRegistro}) => {
         });
     }
 
+    const eliminarusuario = () => {
+        /* En caso hubiera API rest para eliminar habilitada, enviaria el id del usuario para eliminarlo */ 
+        /* obtenerusuario(id, 'DELETE').then((response) => {
+            setRegistro({});
+            sessionStorage.removeItem("usuario");
+            history.push('/step1');      
+        }).catch((error) => {
+            setErrorApi(true);
+        }); */
+
+        if(toggle){
+            inicio();
+        } else {
+            /* Si tratamos de eliminar un usuario API, muestra el usuario grabado en sesion */
+            setToggle(true);
+            setUsuario_Api(false);
+        }
+    }    
+
     const inicio = () => {
         setRegistro({});
+        sessionStorage.removeItem("usuario");
         history.push('/step1');
     }
 
     return (
         <>                
-        {registrado &&
+        {toggle &&
             <UsuarioRegistrado 
-                registro={registro} 
+                registro={usuario} 
                 inicio={inicio} 
                 usuarioapi={usuarioapi}
+                eliminarusuario={eliminarusuario}
                 user={user} 
                 errorapi={errorapi}
             />
@@ -55,6 +74,7 @@ export const Resumen = ({registro, setRegistro}) => {
                 usuario_api={usuario_api}   
                 usuarioapi = {usuarioapi}             
                 errorapi={errorapi}
+                eliminarusuario={eliminarusuario}
             />
         }
         </>

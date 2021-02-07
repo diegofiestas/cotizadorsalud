@@ -8,22 +8,14 @@ import { Plan } from '../Moleculas/Plan';
 export const Step3 = ({ registro, setRegistro }) => {
 
     const [plan, setPlan] = useState([
-        {
-            id: 1, activo: false, nombre: "BÁSICO", precio: "160", cobertura: "3MM",
-            detalle: { item1: true, item2: true, item3: true }
-        },
-        {
-            id: 2, activo: false, nombre: "AVANZADO", precio: "200", cobertura: "5MM",
-            detalle: { item1: true, item2: true, item3: true, item4: true }
-        },
-        {
-            id: 3, activo: false, nombre: "PREMIUM", precio: "250", cobertura: "7MM",
-            detalle: { item1: true, item2: true, item3: true, item4: true, item5: true }
-        },
-        {
-            id: 4, activo: false, nombre: "FULL", precio: "500", cobertura: "9MM",
-            detalle: { item1: true, item2: true, item3: true, item4: true, item5: true, item6: true }
-        }
+        {  id: 1, activo: false, nombre: "BÁSICO", precio: "160", cobertura: "3MM",
+            detalle: { item1: true, item2: true, item3: true }},
+        {  id: 2, activo: false, nombre: "AVANZADO", precio: "200", cobertura: "5MM",
+            detalle: { item1: true, item2: true, item3: true, item4: true }},
+        {  id: 3, activo: false, nombre: "PREMIUM", precio: "250", cobertura: "7MM",
+            detalle: { item1: true, item2: true, item3: true, item4: true, item5: true }},
+        {  id: 4, activo: false, nombre: "FULL", precio: "500", cobertura: "9MM",
+            detalle: { item1: true, item2: true, item3: true, item4: true, item5: true, item6: true }}
     ]);
     const [seleccionado, setSeleccionado] = useState();
     const [servicio, setServicio] = useState(false);
@@ -33,29 +25,24 @@ export const Step3 = ({ registro, setRegistro }) => {
     let history = useHistory();
 
     const comprarplan = () => {        
-        if(seleccionado){
-            setRegistro({ ...registro, "plan": seleccionado })
+        if(seleccionado){            
+            setRegistro({...registro, step: 3});
             history.push('/step4');
-        } else {
-            setSw(true);
-        }
+        } else { setSw(true) }
     }
 
     useEffect(() => {
-        if (Object.entries(registro).length === 0) {
-            history.push('/step1');
-        }
-    }, [registro, history])
+        if(registro.step === 0) { history.push('/step1') }
+        else if(registro.step === 1) { history.push('/step2') }
+    }, [registro.step, history])
 
     const planseleccionado = (ps) => {
+        setRegistro({...registro, "plan": ps });
         const { id } = ps;
         setPlan(plan.map(p => {
             let item = { ...p };
-            if (item.id === id) {
-                item.activo = true;
-            } else {
-                item.activo = false;
-            }
+            if (item.id === id) { item.activo = true }
+            else { item.activo = false }
             return item;
         }));
         setSw(false);
@@ -73,45 +60,28 @@ export const Step3 = ({ registro, setRegistro }) => {
             </p>
                 <h2>Elige <label className="icon-s">tu protección</label></h2>
                 <p>Selecciona tu plan de salud ideal</p>
-                {sw &&
-                    <>
-                    <br />
-                    <label className="error">Debes seleccionar un plan</label>
-                    </>
-                }
+                {sw && <><br /><label className="error">Debes seleccionar un plan</label></>}
                 <div className="planes">
-                    {
-                        plan.map((p) => (
+                    {plan.map((p) => (
                             <Plan p={p} planseleccionado={planseleccionado} key={p.id} />
-                        ))
-                    }
+                        ))}
                 </div>
 
-                {seleccionado &&
-                    <DetallePlan seleccionado={seleccionado} />
-                }
+                {seleccionado && <DetallePlan seleccionado={seleccionado} />}
 
                 <div className="exclusiones">
-                    <p>Revisa nuestros
-                <br />
-                        <label className="icon-s">Servicios y exclusiones</label>
-                    </p>
+                    <p>Revisa nuestros<br /><label className="icon-s">Servicios y exclusiones</label></p>
                 </div>
                 <div className="exclusiones2">
                     <div>Servicios brindados</div>
                     <div onClick={(e) => setServicio(!servicio)}><i className="fas fa-caret-down puntero"></i></div>
-                    {servicio &&
-                        <Servicios />
-                    }
+                    {servicio && <Servicios />}
                 </div>
                 <div className="exclusiones2">
                     <div>Exclusiones</div>
                     <div onClick={(e) => setExclusion(!exclusion)}><i className="fas fa-caret-down puntero"></i></div>
-                    {exclusion &&
-                        <Exclusiones />
-                    }
+                    {exclusion && <Exclusiones />}
                 </div>
-
                 <button type="submit" className="rimac-button" onClick={comprarplan}>Comprar plan</button>
             </div>
         </div>
