@@ -2,7 +2,7 @@ import React from 'react'
 
 export const DetallePlan = ({seleccionado}) => {
     return (
-        <div className="plan-detallado">
+        <div className="plan-detallado animate__animated animate__fadeInDown">
         <div className="plan-detallado-titulo">Cuentas con estos beneficios:</div>
         <div className="plan-detallado-cobertura">
             <div className="cobertura-left">

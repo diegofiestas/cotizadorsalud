@@ -2,7 +2,7 @@ import React from 'react'
 
 export const UsuarioRegistrado = ({registro, inicio, usuarioapi, user, errorapi, eliminarusuario}) => {
     return (
-        <div className="banner-resumen">                      
+        <div className="banner-resumen animate__animated animate__bounce animate__fadeInDown">                      
                 <div className="r-imagen">
                 <div className="titulo-final"><span>Ficha Resumen</span></div> 
                     <img src={user} alt="user" />

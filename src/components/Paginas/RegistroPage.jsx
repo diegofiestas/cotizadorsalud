@@ -19,8 +19,6 @@ export const RegistroPage = () => {
         paterno: "",
         materno: ""
     });
-
-    const [registrados, setRegistrados] = useState([]);
     
     const fechamaxima = () => {
         const FechaActual =  new Date();      

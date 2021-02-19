@@ -7,7 +7,7 @@ export const Cobertura = ({setRegistro, registro}) => {
             if (registro?.cobertura === "cobertura_personal") { document.getElementById("cobertura_personal").checked = true; }
             else { document.getElementById("cobertura_familiar").checked = true; }
         }
-    }, [registro?.Cobertura])
+    }, [registro?.cobertura])
 
     return (
         <>

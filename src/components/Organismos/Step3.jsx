@@ -51,7 +51,7 @@ export const Step3 = ({ registro, setRegistro }) => {
 
     return (
         <div className="banner-dni">
-            <div className="banner-planes">
+            <div className="banner-planes animate__animated animate__bounce animate__fadeInDown">
                 <p>
                     <Link to='/step2'>
                         <i className="far fa-arrow-alt-circle-left icon-s"></i>

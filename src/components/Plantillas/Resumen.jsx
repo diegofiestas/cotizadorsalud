@@ -13,12 +13,13 @@ export const Resumen = ({registro, setRegistro}) => {
     const [errorapi, setErrorApi] = useState(false);
     let history = useHistory();
 
-    useEffect(() => {        
-            if(registro.step === 0) { history.push('/step1') }
-            else if(registro.step === 1) { history.push('/step2') }
-            else if(registro.step === 2) { history.push('/step3') }   
-            else { setToggle(true); setUsuario(JSON.parse(sessionStorage.getItem("usuario"))); }         
-    }, [registro.step, history])
+    useEffect(() => {
+        const user = sessionStorage.getItem("usuario");
+        if(user){
+            setToggle(true); 
+            setUsuario(JSON.parse(sessionStorage.getItem("usuario"))); 
+        }         
+    }, [history])
     
     const usuarioapi = () => {
         setToggle(false);

@@ -24,7 +24,7 @@ export const Step2 = ({ fechamaxima, registro, setRegistro }) => {
 
     return (
         <div className="banner-dni">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="animate__animated animate__bounce animate__fadeInDown">
                 <p>
                     <Link to='/step1'>
                         <i className="far fa-arrow-alt-circle-left icon-s"></i>

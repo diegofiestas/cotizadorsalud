@@ -18,7 +18,7 @@ export const Step4 = ({registro}) => {
 
     return (
         <div className="banner-dni">
-            <div className="mensaje-final">
+            <div className="mensaje-final animate__animated animate__bounce animate__fadeInDown">
                <div className="titulo-final">¡Gracias por <span>confiar en nosotros!</span></div> 
                 Queremos conocer mejor la salud de los asegurados. Un asesor <b>se pondrá en contacto</b> contigo en las siguientes <b>48 horas.</b>
                 <div><button className="boton-final" onClick={FichaResumen}>Ir a Salud</button></div>
