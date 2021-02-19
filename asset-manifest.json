@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cotizadorsalud/static/css/main.a02dc1bd.chunk.css",
-    "main.js": "/cotizadorsalud/static/js/main.12cab446.chunk.js",
-    "main.js.map": "/cotizadorsalud/static/js/main.12cab446.chunk.js.map",
+    "main.js": "/cotizadorsalud/static/js/main.2ea53eab.chunk.js",
+    "main.js.map": "/cotizadorsalud/static/js/main.2ea53eab.chunk.js.map",
     "runtime-main.js": "/cotizadorsalud/static/js/runtime-main.e096cadb.js",
     "runtime-main.js.map": "/cotizadorsalud/static/js/runtime-main.e096cadb.js.map",
     "static/js/2.3e5098bf.chunk.js": "/cotizadorsalud/static/js/2.3e5098bf.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.e096cadb.js",
     "static/js/2.3e5098bf.chunk.js",
     "static/css/main.a02dc1bd.chunk.css",
-    "static/js/main.12cab446.chunk.js"
+    "static/js/main.2ea53eab.chunk.js"
   ]
 }
